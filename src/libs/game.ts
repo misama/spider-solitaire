@@ -26,7 +26,10 @@ export const dragable = (cards: Card[]): boolean => {
     return true;
 }
 
-export const dropable = ({card, targetColumn}: {card: Card, targetColumn: Card}):boolean => {
-
+export const dropable = (column: number, oriColumn: number, card: Card):boolean => {
+    //TODO: 检测是不是可以落在这一列
+    if (column === oriColumn) {
+        return false
+    }
     return true;
 }

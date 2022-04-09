@@ -1,11 +1,13 @@
-import React, { useContext }from 'react';
-import { Card, dragable } from '../../libs/generateCard';
+import React, { MouseEvent, useContext }from 'react';
+import { Card, dragable } from '../../libs/game';
 import SingleCard from '../SingleCard';
 import {CardsContext} from '../../libs/state';
 const Column: React.FunctionComponent<{cards: Card[], index: number}> = ({cards, index}) => {
     const { dispatch } = useContext(CardsContext)
+
     return (
-    <div className="column">
+    <div 
+    className="column">
         {cards.map((card, ind)=> 
         <SingleCard 
             card={card} 

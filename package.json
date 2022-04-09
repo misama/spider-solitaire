@@ -7,7 +7,8 @@
     "prebuild": "rm -rf dist",
     "build": "webpack",
     "start:dev": "webpack serve",
-    "eslint:fix": "eslint --ignore-path .eslintignore --ext js,jsx,ts,tsx --fix ."
+    "eslint:fix": "eslint --ignore-path .eslintignore --ext js,jsx,ts,tsx --fix .",
+    "pretest": "./node_modules/.bin/eslint --ignore-path .eslintignore . --fix"
   },
   "keywords": [],
   "author": "",
@@ -47,5 +48,10 @@
     "webpack": "^5.10.1",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pretest"
+    }
   }
 }

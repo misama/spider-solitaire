@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, generateCards } from './generateCard';
+import { Card, generateCards, dropable } from './game';
+
 interface GameProps {
     columns: Card[][],
     unSettled: Card[],
@@ -19,6 +20,7 @@ type ActionInterface = {
     data: {mousePosX: number, mousePosY: number}
 } | {
     type: 'moveEnd', 
+    data: {mousePageX: number, mousePageY: number}
 }
 
 interface ContextProps {
@@ -34,9 +36,10 @@ export const initialState: GameProps = {
 };
 
 export function reducer(draft: GameProps, action: ActionInterface) {
+    let cards;
     switch (action.type) {
       case 'init':
-        const cards = generateCards();
+        cards = generateCards();
         for(let i = 0; i < 10; i++){
             draft.columns.push([]);
         }
@@ -64,6 +67,7 @@ export function reducer(draft: GameProps, action: ActionInterface) {
         }
       return;
       case 'moving':
+          //TODO: 这个卡后面的所有卡片都要跟着移动
           if(draft.movingCard && draft.startPos){ 
               console.log(action.data.mousePosX - draft.startPos.mousePosX, action.data.mousePosY - draft.startPos.mousePosY)
             draft.columns[draft.movingCard.col][draft.movingCard.row].posX =
@@ -74,8 +78,24 @@ export function reducer(draft: GameProps, action: ActionInterface) {
           }
         return;
       case 'moveEnd':
-        if(draft.movingCard){
-            //draft.columns[draft.movingCard.col] = draft.columns[draft.movingCard.col].slice(0,draft.movingCard.row)
+        if(draft.movingCard && draft.startPos){
+            const columnWidth = window.innerWidth/10;
+            //TODO: 应该算上卡片的长度，来确切计算应该落在哪一列
+            const stopInColumn = Math.round(action.data.mousePageX/columnWidth);
+            if(dropable(stopInColumn, draft.movingCard.col, draft.columns[draft.movingCard.col][draft.movingCard.row])){
+                draft.columns[stopInColumn] = draft.columns[stopInColumn].concat(draft.columns[draft.movingCard.col].slice(draft.movingCard.row));
+                draft.columns[draft.movingCard.col] = draft.columns[draft.movingCard.col].slice(0,draft.movingCard.row)
+                console.log(stopInColumn);
+                draft.columns[stopInColumn].forEach((card, ind)=>{
+                    card.posX = 0;
+                    card.posY = -ind*window.innerWidth/10.5
+                })
+            }else{
+                draft.columns[draft.movingCard.col].forEach((card, ind)=>{
+                    card.posX = 0;
+                    card.posY = -ind*window.innerWidth/10.5
+                })
+            }
         }
         draft.movingCard = null;
         draft.startPos = null;

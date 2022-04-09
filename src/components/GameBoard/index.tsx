@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useEffect} from 'react';
+import React, {MouseEvent, useEffect} from 'react';
 import './index.less';
 import Column from '../Column';
 import { useImmerReducer } from "use-immer";
@@ -8,21 +8,25 @@ const GameBoard: React.FunctionComponent = () => {
     const [state, dispatch] = useImmerReducer(reducer, initialState)
     useEffect(() => {
         dispatch({type: 'init'})
-        //todo: add Throttling
-        window.addEventListener('resize',() => {
+        //TODO: add Throttling
+        const onResize = () => {
             dispatch({type: 'resize'})
-        })
-        return () => {}
+        }
+        window.addEventListener('resize',onResize)
+        return () => {
+            window.removeEventListener('resize', onResize)
+        }
     }, [])
-    const handleMouseUp = (e: SyntheticEvent) => {
+    const handleMouseUp = (event: MouseEvent) => {
+        //TODO: 应该全局（window）检测鼠标抬起来。
         if(state.movingCard){
-            dispatch({type: 'moveEnd'})
+            dispatch({type: 'moveEnd', data: {mousePageX: event.pageX, mousePageY: event.pageY}})
         }
     }
 
-    const handleDragCards = (e:any) => {
-        e.persist();
-        dispatch({type: 'moving', data: {mousePosX: e.clientX, mousePosY: e.clientY}})
+    const handleDragCards = (event:MouseEvent) => {
+        //TODO: add Throttling
+        dispatch({type: 'moving', data: {mousePosX: event.clientX, mousePosY: event.clientY}})
     }
     return (
         <CardsContext.Provider value={{state, dispatch}}>

@@ -18,7 +18,7 @@ const GameBoard: React.FunctionComponent = () => {
         }
     }, [])
     const handleMouseUp = (event: MouseEvent) => {
-        //TODO: 应该全局（window）检测鼠标抬起来。
+        //TODO: 应该全局（window）检测鼠标抬起来
         if(state.movingCard){
             dispatch({type: 'moveEnd', data: {mousePageX: event.pageX, mousePageY: event.pageY}})
         }

@@ -3,7 +3,7 @@ import GameBoard from '../GameBoard';
 import { generateCards } from '../../libs/generateCard';
 
 const Game = () => {
-    return (<GameBoard cards={generateCards()}/>)
+    return (<GameBoard/>)
 }
 
 export default Game;

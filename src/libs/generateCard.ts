@@ -2,8 +2,8 @@ export interface Card {
     number: number;
     color: 'Spade'|'Heart'|'Club'|'Diamond';
     status: 'unSettled' | 'opened' | 'unOpened' | 'resolved',
-    posX?: number;
-    posY?: number;
+    posX: number;
+    posY: number;
 }
 
 export const generateCards = (): Card[] => {
@@ -17,11 +17,16 @@ export const generateCards = (): Card[] => {
     return cards;
 }
 
-export const dragable = (cards: Card[]) => {
+export const dragable = (cards: Card[]): boolean => {
     for(let i = 1; i < cards.length; i++){
         if(cards[i].number != cards[i-1].number - 1){
             return false;
         }
     }
+    return true;
+}
+
+export const dropable = ({card, targetColumn}: {card: Card, targetColumn: Card}):boolean => {
+
     return true;
 }

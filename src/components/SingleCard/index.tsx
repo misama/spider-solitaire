@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { Card } from '../../libs/generateCard';
 import {CardsContext} from '../../libs/state';
 
@@ -8,19 +8,28 @@ const SingleCard : React.FunctionComponent<{
     draggable: boolean,
 }> = ({card: {number, color, status, posX, posY}, position, draggable }) => {
     const { dispatch } = useContext(CardsContext);
-    const handleMouseDown = (e: SyntheticEvent) => {
+    const [selected, setSelected] = useState<boolean>(false)
+    const handleMouseDown = (e: any) => {
         if(draggable){
-            console.log('123123123', position) 
-            dispatch({type: 'move', data: position})
+            setSelected(true);
+            dispatch({
+                type: 'moveStart', 
+            data: {...position, mousePosX: e.clientX, mousePosY: e.clientY}})
         }else{
-            console.log('222222')
+            //console.log('111111')
         }
+    }
+    
+    const handleMouseUp = (e: SyntheticEvent) => {
+        setSelected(false);
+
     }
     //status==='opened'
     return (
         <div 
             onMouseDown={handleMouseDown}
-            style={{zIndex: position.row,  position: 'relative', left: `0px`,top: `${posY}px`}}
+            onMouseUp={handleMouseUp}
+            style={{zIndex: selected ? 999 : position.row,  position: 'relative', left: `${posX}px`,top: `${posY}px`}}
         >
             <img 
             draggable="false"

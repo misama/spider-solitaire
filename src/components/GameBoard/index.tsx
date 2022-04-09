@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {SyntheticEvent, useEffect} from 'react';
 import './index.less';
-import { Card } from '../../libs/generateCard';
 import Column from '../Column';
 import { useImmerReducer } from "use-immer";
 import {reducer, initialState, CardsContext} from '../../libs/state'
@@ -15,9 +14,23 @@ const GameBoard: React.FunctionComponent = () => {
         })
         return () => {}
     }, [])
+    const handleMouseUp = (e: SyntheticEvent) => {
+        if(state.movingCard){
+            dispatch({type: 'moveEnd'})
+        }
+    }
+
+    const handleDragCards = (e:any) => {
+        e.persist();
+        dispatch({type: 'moving', data: {mousePosX: e.clientX, mousePosY: e.clientY}})
+    }
     return (
         <CardsContext.Provider value={{state, dispatch}}>
-            <div className="game-board">
+            <div 
+               onMouseUp={handleMouseUp}
+               onMouseMove={handleDragCards}
+                className="game-board"
+                >
                 <div>
                     <div className="un-opened">
 

@@ -1,6 +1,3 @@
 node_modules
-build
-src/public
-public/js/libs/bld.js
-src/routers/bldEncode.ts
+dist
 webpack.config.js

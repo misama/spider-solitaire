@@ -7,29 +7,30 @@ export interface Card {
 }
 
 export const generateCards = (): Card[] => {
-    const cards: Card[] = [];
-    for(let i = 0; i < 8; i++){
-        for(let j = 1; j <= 13; j++){
-            cards.push({number: j, color: 'Spade', status: 'unSettled', posX:0,posY:0});
-        }
+  const cards: Card[] = [];
+  for(let i = 0; i < 8; i++) {
+    for(let j = 1; j <= 13; j++) {
+      cards.push({number: j, color: 'Spade', status: 'unSettled', posX:0,posY:0});
     }
-    cards.sort(()=> Math.random() - 0.5);
-    return cards;
+  }
+  cards.sort(()=> Math.random() - 0.5);
+  return cards;
 }
 
 export const dragable = (cards: Card[]): boolean => {
-    for(let i = 1; i < cards.length; i++){
-        if(cards[i].number != cards[i-1].number - 1){
-            return false;
-        }
+  for(let i = 1; i < cards.length; i++) {
+    if(cards[i].number != cards[i - 1].number - 1) {
+      return false;
     }
-    return true;
+  }
+  return true;
 }
 
 export const dropable = (column: number, oriColumn: number, card: Card):boolean => {
-    //TODO: 检测是不是可以落在这一列
-    if (column === oriColumn) {
-        return false
-    }
-    return true;
+  //TODO: 检测是不是可以落在这一列
+  console.log(card);
+  if (column === oriColumn) {
+    return false
+  }
+  return true;
 }

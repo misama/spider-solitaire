@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import Game from './components/Game';
+import Router from './components/Router';
 
-ReactDOM.render(<Game />, document.getElementById('game-wrapper'));
+ReactDOM.render(<Router />, document.getElementById('game-wrapper'));

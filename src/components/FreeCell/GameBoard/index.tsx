@@ -1,11 +1,11 @@
 import React, {MouseEvent, useEffect} from 'react';
-import './index.less';
 import Column from '../Column';
 import { useImmerReducer } from 'use-immer';
-import {reducer, initialState, CardsContext} from '../../libs/state'
+import {reducer, initialState, FreeCellContext} from '../state'
 
 const GameBoard: React.FunctionComponent = () => {
   const [state, dispatch] = useImmerReducer(reducer, initialState)
+  console.log(1111111)
   useEffect(() => {
     dispatch({type: 'init'})
     //TODO: add Throttling
@@ -29,33 +29,16 @@ const GameBoard: React.FunctionComponent = () => {
     dispatch({type: 'moving', data: {mousePosX: event.clientX, mousePosY: event.clientY}})
   }
   return (
-    <CardsContext.Provider value={{state, dispatch}}>
+    <FreeCellContext.Provider value={{state, dispatch}}>
       <div
         onMouseUp={handleMouseUp}
         onMouseMove={handleDragCards}
-        className="game-board"
+        className="freecell game-board"
       >
         <div className="top-line">
-          <div className="place-holder un-opened">
-            {state.unSettled.length > 0 ? <img
-              draggable="false"
-              src={'./assets/card-back.png'}
-            /> : <img
-              draggable="false"
-              src={'./assets/place-holder.png'}
-            />}
+          <div>
           </div>
           <div className="resolved">
-            {state.resolved.map(resolved=> (
-              <div className="place-holder reso-single">
-                {resolved ? <img
-                  draggable="false"
-                  src={'./assets/card-back.png'}
-                /> : <img
-                  draggable="false"
-                  src={'./assets/place-holder.png'}
-                />}</div>
-            ))}
           </div>
         </div>
         <div className="clear"/>
@@ -63,7 +46,7 @@ const GameBoard: React.FunctionComponent = () => {
           {state.columns.map((column, index) => <Column key={`column${index}`} cards={column} index={index}/>)}
         </div>
       </div>
-    </CardsContext.Provider>
+    </FreeCellContext.Provider>
   )
 }
 

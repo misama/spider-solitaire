@@ -1,13 +1,13 @@
-import React, { MouseEvent, useContext, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { Card } from '../../libs/game';
-import {CardsContext} from '../../libs/state';
-
+import{MovingInterface} from '../../libs/interfaces';
 const SingleCard : React.FunctionComponent<{
     card: Card,
     position: {col: number, row: number},
     draggable: boolean,
-}> = ({card: {number, color, status, posX, posY}, position, draggable }) => {
-  const { dispatch } = useContext(CardsContext);
+    dispatch: React.Dispatch<MovingInterface>
+}> = ({card: {number, color, status, posX, posY}, position, draggable, dispatch }) => {
+
   const [selected, setSelected] = useState<boolean>(false)
   const handleMouseDown = (event: MouseEvent) => {
     if(draggable) {
@@ -33,7 +33,7 @@ const SingleCard : React.FunctionComponent<{
     >
       <img
         draggable="false"
-        src={status ? `./assets/${color}${number}.png`
+        src={status === 'opened' ? `./assets/${color}${number}.png`
           : './assets/card-back.png'
         }
       />

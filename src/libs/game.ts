@@ -5,10 +5,10 @@ export interface Card {
     posX: number;
     posY: number;
 }
-
-export const generateCards = (): Card[] => {
+//TODO: 根据参数生成四种/两种/一种不同的花色， 以及不同的套数
+export const generateCards = (setNum: number): Card[] => {
   const cards: Card[] = [];
-  for(let i = 0; i < 8; i++) {
+  for(let i = 0; i < setNum; i++) {
     for(let j = 1; j <= 13; j++) {
       cards.push({number: j, color: 'Spade', status: 'unSettled', posX:0,posY:0});
     }
@@ -26,11 +26,17 @@ export const dragable = (cards: Card[]): boolean => {
   return true;
 }
 
-export const dropable = (column: number, oriColumn: number, card: Card):boolean => {
-  //TODO: 检测是不是可以落在这一列
-  console.log(card);
-  if (column === oriColumn) {
-    return false
+export const dropable = (cards: Card[][], targetColumn: number, oriColumn: number, card: Card):boolean => {
+  if (targetColumn === oriColumn) {
+    return false;
   }
-  return true;
+  if(cards[targetColumn].length === 0) {
+    return true;
+  }
+  return cards[targetColumn][cards[targetColumn].length - 1].number === card.number + 1;
+}
+
+export const isValidSet = (cards: Card[]) => {
+  //TODO: 如果cards的最后十三个number是1到13， 返回true，否则返回false
+  console.log(cards)
 }

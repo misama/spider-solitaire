@@ -5,7 +5,6 @@ import {reducer, initialState, FreeCellContext} from '../state'
 
 const GameBoard: React.FunctionComponent = () => {
   const [state, dispatch] = useImmerReducer(reducer, initialState)
-  console.log(1111111)
   useEffect(() => {
     dispatch({type: 'init'})
     //TODO: add Throttling
@@ -26,7 +25,9 @@ const GameBoard: React.FunctionComponent = () => {
 
   const handleDragCards = (event:MouseEvent) => {
     //TODO: add Throttling
-    dispatch({type: 'moving', data: {mousePosX: event.clientX, mousePosY: event.clientY}})
+    if(state.movingCard) {
+      dispatch({type: 'moving', data: {mousePosX: event.clientX, mousePosY: event.clientY}})
+    }
   }
   return (
     <FreeCellContext.Provider value={{state, dispatch}}>
@@ -36,9 +37,31 @@ const GameBoard: React.FunctionComponent = () => {
         className="freecell game-board"
       >
         <div className="top-line">
-          <div>
+          <div className='resolved'>
+            {state.resolved.map((resolved, index) =>
+              resolved.length === 0 ?
+                <div className='place-holder reso-single'>
+                  <img
+                    draggable="false"
+                    src={'./assets/place-holder.png'}
+                  /></div> :
+                <Column key={`resolved${index}`} cards={resolved} index={index}/>
+            )}
           </div>
-          <div className="resolved">
+          <div className="temp-place">
+            {state.tempPlace.map((tempCard) =>
+              tempCard ?
+                <div className='place-holder reso-single'>
+                  <img
+                    draggable="false"
+                    src={'./assets/place-holder.png'}
+                  /></div> :
+                <div className='place-holder reso-single'>
+                  <img
+                    draggable="false"
+                    src={'./assets/place-holder.png'}
+                  /></div>
+            )}
           </div>
         </div>
         <div className="clear"/>

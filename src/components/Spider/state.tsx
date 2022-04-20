@@ -88,7 +88,7 @@ export function reducer (draft: GameProps, action: ActionInterface): void {
       //TODO: 应该算上卡片的长度，来确切计算应该落在哪一列
       //如果落在边界外面也要处理
       const stopInColumn = Math.round(action.data.mousePageX / columnWidth);
-      if(dropable(draft.columns, stopInColumn, originC, draft.columns[originC][originR])) {
+      if(dropable(draft.columns, stopInColumn, originC, draft.columns[originC][originR], 'spider')) {
         draft.columns[stopInColumn] = draft.columns[stopInColumn].concat(draft.columns[originC].slice(originR));
         draft.columns[originC] = draft.columns[originC].slice(0,originR);
         console.log(stopInColumn);

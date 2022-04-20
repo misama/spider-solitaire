@@ -26,14 +26,21 @@ export const dragable = (cards: Card[]): boolean => {
   return true;
 }
 
-export const dropable = (cards: Card[][], targetColumn: number, oriColumn: number, card: Card):boolean => {
+export const dropable = (cards: Card[][], targetColumn: number, oriColumn: number, card: Card, game: 'freecell' | 'spider'):boolean => {
+
   if (targetColumn === oriColumn) {
     return false;
   }
   if(cards[targetColumn].length === 0) {
     return true;
   }
-  return cards[targetColumn][cards[targetColumn].length - 1].number === card.number + 1;
+  //TODO: freecell 需要判断花色，不同花色才可以
+  if(game === 'freecell') {
+    return true;
+  } else {
+    return cards[targetColumn][cards[targetColumn].length - 1].number === card.number + 1;
+  }
+
 }
 
 export const isValidSet = (cards: Card[]) => {

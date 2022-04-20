@@ -43,6 +43,34 @@
 }
 
 .freecell {
+  .top-line {
+    display: flex;
+  }
+  .resolved {
+    display:flex;
+    flex-direction:row;
+    .reso-single {
+      margin-left:5px;
+      margin-right:5px;
+      width: calc(22.2% - 12px);
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .temp-place {
+    display:flex;
+    flex-direction:row;
+    direction: rtl;
+    .reso-single {
+      margin-left:5px;
+      margin-right:5px;
+      width: calc(22.2% - 12px);
+      img {
+        width: 100%;
+      }
+    }
+  }
   .game-field {
     display:flex;
     flex-direction:row;

@@ -19,7 +19,7 @@ const SingleCard : React.FunctionComponent<{
   }
 
   const handleMouseUp = () => {
-    //TODO: 如果鼠标跑太快，卡片没跟上就松开鼠标这里会出错。
+    //TODO: mouse running too fast will cause issue here
     setSelected(false);
 
   }

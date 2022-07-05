@@ -68,7 +68,7 @@ export function reducer (draft: GameProps, action: ActionInterface): void {
     }
     return;
   case 'moving':
-    //TODO: 这个卡后面的所有卡片都要跟着移动
+    //TODO: all the cards should move together
     if(draft.movingCard && draft.movingStartPos) {
       originC = draft.movingCard.col;
       originR = draft.movingCard.row;
@@ -85,7 +85,7 @@ export function reducer (draft: GameProps, action: ActionInterface): void {
       const columnWidth = window.innerWidth / 10;
       originC = draft.movingCard.col;
       originR = draft.movingCard.row;
-      //TODO: 应该算上卡片的长度，来确切计算应该落在哪一列
+      //TODO: should add the width of the cards
       //如果落在边界外面也要处理
       const stopInColumn = Math.round(action.data.mousePageX / columnWidth);
       if(dropable(draft.columns, stopInColumn, originC, draft.columns[originC][originR], 'spider')) {

@@ -63,7 +63,7 @@ export function reducer (draft: GameProps, action: ActionInterface): void {
     }
     return;
   case 'moving':
-    //TODO: 这个卡后面的所有卡片都要跟着移动
+    //TODO: followed by all the cards aftre this one
     if(draft.movingCard && draft.movingStartPos) {
       originC = draft.movingCard.col;
       originR = draft.movingCard.row;
@@ -76,7 +76,6 @@ export function reducer (draft: GameProps, action: ActionInterface): void {
     }
     return;
   case 'moveEnd':
-    console.log('1212121212', draft.movingCard?.col, draft.movingStartPos?.cardX)
     if(draft.movingCard && draft.movingStartPos) {
       const columnWidth = window.innerWidth / 8;
       originC = draft.movingCard.col;

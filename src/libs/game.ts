@@ -5,7 +5,7 @@ export interface Card {
     posX: number;
     posY: number;
 }
-//TODO: 根据参数生成四种/两种/一种不同的花色， 以及不同的套数
+//TODO: this is only for solitaire
 export const generateCards = (setNum: number): Card[] => {
   const cards: Card[] = [];
   for(let i = 0; i < setNum; i++) {
@@ -34,7 +34,7 @@ export const dropable = (cards: Card[][], targetColumn: number, oriColumn: numbe
   if(cards[targetColumn].length === 0) {
     return true;
   }
-  //TODO: freecell 需要判断花色，不同花色才可以
+  //TODO: freecell need to adjust colors，should be different color
   if(game === 'freecell') {
     return true;
   } else {
@@ -44,6 +44,6 @@ export const dropable = (cards: Card[][], targetColumn: number, oriColumn: numbe
 }
 
 export const isValidSet = (cards: Card[]) => {
-  //TODO: 如果cards的最后十三个number是1到13， 返回true，否则返回false
+  //TODO: if the last 13 cards is 1 to 13， return true，otherwise false
   console.log(cards)
 }
